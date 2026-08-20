@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subscription: one
+  feature: one
+  units_used: 1
+  recorded_for_period: 2026-08-19
+
+two:
+  subscription: two
+  feature: two
+  units_used: 1
+  recorded_for_period: 2026-08-19

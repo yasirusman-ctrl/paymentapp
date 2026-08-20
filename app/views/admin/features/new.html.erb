@@ -1,0 +1,25 @@
+<h2>Create New Feature</h2>
+
+<%= form_with(model: [:admin, @feature], local: true, style: "background: white; padding: 2rem; border-radius: 8px; max-width: 500px;") do |f| %>
+  <div style="margin-bottom: 1rem;">
+    <%= f.label :name, "Feature Name", style: "display: block; font-weight: bold; margin-bottom: 0.5rem;" %>
+    <%= f.text_field :name, required: true, style: "width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" %>
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <%= f.label :code, "Feature Code (e.g. api_calls)", style: "display: block; font-weight: bold; margin-bottom: 0.5rem;" %>
+    <%= f.text_field :code, required: true, style: "width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" %>
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <%= f.label :unit_price, "Unit Price ($)", style: "display: block; font-weight: bold; margin-bottom: 0.5rem;" %>
+    <%= f.number_field :unit_price, step: 0.01, required: true, style: "width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" %>
+  </div>
+
+  <div style="margin-bottom: 1.5rem;">
+    <%= f.label :max_unit_limit, "Max Unit Limit", style: "display: block; font-weight: bold; margin-bottom: 0.5rem;" %>
+    <%= f.number_field :max_unit_limit, required: true, style: "width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" %>
+  </div>
+
+  <%= f.submit "Save Feature", style: "background: #2563eb; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; width: 100%;" %>
+<% end %>

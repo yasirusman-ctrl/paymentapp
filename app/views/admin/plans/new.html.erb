@@ -1,0 +1,25 @@
+<h2>Create New Plan</h2>
+
+<%= form_with(model: [:admin, @plan], local: true, style: "background: white; padding: 2rem; border-radius: 8px; max-width: 500px;") do |f| %>
+  <div style="margin-bottom: 1rem;">
+    <%= f.label :name, "Plan Name", style: "display: block; font-weight: bold; margin-bottom: 0.5rem;" %>
+    <%= f.text_field :name, required: true, style: "width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" %>
+  </div>
+
+  <div style="margin-bottom: 1rem;">
+    <%= f.label :monthly_fee, "Monthly Fee ($)", style: "display: block; font-weight: bold; margin-bottom: 0.5rem;" %>
+    <%= f.number_field :monthly_fee, step: 0.01, required: true, style: "width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" %>
+  </div>
+
+  <div style="margin-bottom: 1.5rem;">
+    <label style="display: block; font-weight: bold; margin-bottom: 0.5rem;">Link Features to Plan</label>
+    <%= f.collection_check_boxes :feature_ids, Feature.all, :id, :name do |b| %>
+      <div style="margin-bottom: 0.25rem;">
+        <%= b.check_box %>
+        <%= b.label { b.text } %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= f.submit "Save Plan", style: "background: #2563eb; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; cursor: pointer; width: 100%;" %>
+<% end %>

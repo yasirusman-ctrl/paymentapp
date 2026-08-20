@@ -1,0 +1,27 @@
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+  <h2>Buyer Feature Usage Table</h2>
+  <%= link_to "+ Record Usage Entry", new_admin_usage_entry_path, style: "background-color: #2563eb; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;" %>
+</div>
+
+<table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+  <thead style="background-color: #f1f5f9; text-align: left;">
+    <tr>
+      <th style="padding: 0.75rem 1rem;">Date</th>
+      <th style="padding: 0.75rem 1rem;">Buyer Name</th>
+      <th style="padding: 0.75rem 1rem;">Subscription Plan</th>
+      <th style="padding: 0.75rem 1rem;">Feature</th>
+      <th style="padding: 0.75rem 1rem;">Units Used</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @usage_entries.each do |entry| %>
+      <tr style="border-bottom: 1px solid #e2e8f0;">
+        <td style="padding: 0.75rem 1rem;"><%= entry.recorded_for_period || entry.created_at.to_date %></td>
+        <td style="padding: 0.75rem 1rem; font-weight: bold;"><%= entry.subscription.user.name %></td>
+        <td style="padding: 0.75rem 1rem;"><%= entry.subscription.plan.name %></td>
+        <td style="padding: 0.75rem 1rem;"><%= entry.feature.name %></td>
+        <td style="padding: 0.75rem 1rem;"><strong><%= entry.units_used %> units</strong></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

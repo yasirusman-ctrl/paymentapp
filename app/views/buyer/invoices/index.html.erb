@@ -1,0 +1,38 @@
+<h2>My Billing & Transaction History</h2>
+
+<table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; margin-top: 1.5rem;">
+  <thead style="background-color: #f1f5f9; text-align: left;">
+    <tr>
+      <th style="padding: 0.75rem 1rem;">Invoice #</th>
+      <th style="padding: 0.75rem 1rem;">Date</th>
+      <th style="padding: 0.75rem 1rem;">Type</th>
+      <th style="padding: 0.75rem 1rem;">Total Amount</th>
+      <th style="padding: 0.75rem 1rem;">Stripe Ref</th>
+      <th style="padding: 0.75rem 1rem;">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @invoices.empty? %>
+      <tr>
+        <td colspan="6" style="padding: 1.5rem; text-align: center; color: #64748b;">No transaction history found.</td>
+      </tr>
+    <% else %>
+      <% @invoices.each do |inv| %>
+        <tr style="border-bottom: 1px solid #e2e8f0;">
+          <td style="padding: 0.75rem 1rem; font-weight: bold;">#<%= inv.id %></td>
+          <td style="padding: 0.75rem 1rem;"><%= inv.created_at.strftime('%B %d, %Y') %></td>
+          <td style="padding: 0.75rem 1rem;"><%= inv.charge_type.titleize %></td>
+          <td style="padding: 0.75rem 1rem; font-weight: bold;">$<%= sprintf('%.2f', inv.total_amount) %></td>
+          <td style="padding: 0.75rem 1rem;"><code><%= inv.stripe_payment_intent_id %></code></td>
+          <td style="padding: 0.75rem 1rem;">
+            <% if inv.status == 'paid' %>
+              <span style="color: green; font-weight: bold;">PAID</span>
+            <% else %>
+              <span style="color: red; font-weight: bold;"><%= inv.status.upcase %></span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

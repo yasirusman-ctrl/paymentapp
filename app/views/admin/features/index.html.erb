@@ -1,0 +1,29 @@
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+  <h2>Features Management</h2>
+  <%= link_to "+ Create New Feature", new_admin_feature_path, style: "background-color: #2563eb; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;" %>
+</div>
+
+<table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+  <thead style="background-color: #f1f5f9; text-align: left;">
+    <tr>
+      <th style="padding: 0.75rem 1rem;">Feature Name</th>
+      <th style="padding: 0.75rem 1rem;">Code</th>
+      <th style="padding: 0.75rem 1rem;">Unit Price</th>
+      <th style="padding: 0.75rem 1rem;">Max Unit Limit</th>
+      <th style="padding: 0.75rem 1rem;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @features.each do |feature| %>
+      <tr style="border-bottom: 1px solid #e2e8f0;">
+        <td style="padding: 0.75rem 1rem; font-weight: bold;"><%= feature.name %></td>
+        <td style="padding: 0.75rem 1rem;"><code><%= feature.code %></code></td>
+        <td style="padding: 0.75rem 1rem;">$<%= sprintf('%.2f', feature.unit_price || 0) %></td>
+        <td style="padding: 0.75rem 1rem;"><%= feature.max_unit_limit %> units</td>
+        <td style="padding: 0.75rem 1rem;">
+          <%= button_to "Delete", admin_feature_path(feature), method: :delete, data: { confirm: "Are you sure?" }, style: "background: none; border: none; color: #ef4444; cursor: pointer;" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

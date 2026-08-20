@@ -1,0 +1,43 @@
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+  <h2>My Active Subscriptions</h2>
+  <% if current_user.payment_authorized? %>
+    <%= link_to "+ Subscribe to Plan", new_buyer_subscription_path, style: "background-color: #10b981; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;" %>
+  <% else %>
+    <%= link_to "Authorize Payment First", new_buyer_payment_method_path, style: "background-color: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none;" %>
+  <% end %>
+</div>
+
+<% unless current_user.payment_authorized? %>
+  <div style="background-color: #fef3c7; color: #92400e; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
+    ⚠️ <strong>Payment Authorization Required:</strong> You must authorize a payment method using Stripe before you can subscribe to any plan.
+  </div>
+<% end %>
+
+<table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+  <thead style="background-color: #f1f5f9; text-align: left;">
+    <tr>
+      <th style="padding: 0.75rem 1rem;">Plan Name</th>
+      <th style="padding: 0.75rem 1rem;">Monthly Fee</th>
+      <th style="padding: 0.75rem 1rem;">Status</th>
+      <th style="padding: 0.75rem 1rem;">Started At</th>
+      <th style="padding: 0.75rem 1rem;">Next Billing Day</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @subscriptions.empty? %>
+      <tr>
+        <td colspan="5" style="padding: 1.5rem; text-align: center; color: #64748b;">You have no active subscriptions yet.</td>
+      </tr>
+    <% else %>
+      <% @subscriptions.each do |sub| %>
+        <tr style="border-bottom: 1px solid #e2e8f0;">
+          <td style="padding: 0.75rem 1rem; font-weight: bold;"><%= sub.plan.name %></td>
+          <td style="padding: 0.75rem 1rem;">$<%= sprintf('%.2f', sub.plan.monthly_fee) %>/mo</td>
+          <td style="padding: 0.75rem 1rem;"><span style="color: green; font-weight: bold;"><%= sub.status.capitalize %></span></td>
+          <td style="padding: 0.75rem 1rem;"><%= sub.started_at&.strftime('%B %d, %Y') %></td>
+          <td style="padding: 0.75rem 1rem;">Day <%= current_user.billing_day || 1 %> of each month</td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

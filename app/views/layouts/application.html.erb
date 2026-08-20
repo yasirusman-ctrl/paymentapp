@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Billing & Payment System</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body style="font-family: system-ui, sans-serif; background-color: #f8fafc; margin: 0; padding: 0;">
+    <% if user_signed_in? %>
+      <nav style="background-color: #1e293b; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-weight: bold; font-size: 1.25rem;">💳 PaymentApp</div>
+
+        <div style="display: flex; gap: 1.5rem; align-items: center;">
+          <% if current_user.admin? %>
+            <a href="<%= admin_users_path %>" style="color: white; text-decoration: none;">Users & Invites</a>
+            <a href="<%= admin_plans_path %>" style="color: white; text-decoration: none;">Plans</a>
+            <a href="<%= admin_features_path %>" style="color: white; text-decoration: none;">Features</a>
+            <a href="<%= admin_usage_entries_path %>" style="color: white; text-decoration: none;">Usage Table</a>
+          <% elsif current_user.buyer? %>
+            <a href="<%= buyer_subscriptions_path %>" style="color: white; text-decoration: none;">My Subscriptions</a>
+            <a href="<%= new_buyer_payment_method_path %>" style="color: white; text-decoration: none;">Payment Authorization</a>
+            <a href="<%= buyer_invoices_path %>" style="color: white; text-decoration: none;">Billing History</a>
+          <% end %>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <% if current_user.profile_photo.attached? %>
+            <%= image_tag current_user.profile_photo, style: "width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" %>
+          <% end %>
+          <span><%= current_user.name %> (<%= current_user.role.capitalize %>)</span>
+          <%= button_to "Sign Out", destroy_user_session_path, method: :delete, style: "background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;" %>
+        </div>
+      </nav>
+    <% end %>
+
+    <main style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+      <% if notice %>
+        <div style="background-color: #dcfce7; color: #166534; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div style="background-color: #fee2e2; color: #991b1b; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>
