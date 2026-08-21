@@ -1,0 +1,13 @@
+Payment Expiration Warning
+
+Hi <%= @user.name || @user.email %>,
+
+Your <%= @plan.name %> subscription will expire in <%= @days_left %> day<%= 's' if @days_left > 1 %>.
+
+Expiration date: <%= @current_period_end.strftime("%B %d, %Y") %>
+Monthly fee: $<%= @plan.monthly_fee %>
+
+Please ensure your payment method is up to date to avoid interruption of service.
+
+Thank you,
+Your Team

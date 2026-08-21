@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # Root/home page
   root "home#index"
+  post '/stripe/webhooks', to: 'stripe_webhooks#receive'
 
   # Admin Namespace
   namespace :admin do

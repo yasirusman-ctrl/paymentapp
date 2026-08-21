@@ -1,0 +1,6 @@
+<h2>Subscriber Expiration Alert</h2>
+
+<p><strong><%= @user.email %></strong>'s <strong><%= @plan.name %></strong> subscription expires in <strong><%= @days_left %> day<%= 's' if @days_left > 1 %></strong>.</p>
+
+<p><strong>Expiration date:</strong> <%= @current_period_end.strftime("%B %d, %Y") %></p>
+<p><strong>Monthly fee:</strong> $<%= @plan.monthly_fee %></p>
